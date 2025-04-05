@@ -98,25 +98,28 @@
             border-radius: 5px;
         }
         .form-group select {
-    width: 100%;
+    width: 95%;
     padding: 10px;
-    font-size: 16px;
-    border: 2px solid #4CAF50;
-    border-radius: 8px;
+    border: 2px solid #ccc; /* Pertebal border agar lebih terlihat */
+    border-radius: 5px;
     background-color: white;
-    appearance: none;
+    font-size: 16px;
     cursor: pointer;
-    outline: none;
+    transition: all 0.3s ease-in-out; /* Animasi halus saat berubah */
+    outline: none; /* Hapus outline default */
 }
 
-/* Tambahkan panah custom */
-       .form-group select:focus {
-    border-color: #45a049;
+/* Efek saat hover */
+.form-group select:hover {
+    border-color: #4CAF50; /* Warna border berubah saat hover */
+    background-color: #ffffff; /* Latar belakang sedikit lebih terang */
 }
 
-/* Untuk memberi efek saat hover */
-        .form-group select:hover {
-    background-color: #f1f1f1;
+/* Efek saat fokus (klik) */
+.form-group select:focus {
+    border-color: #4CAF50; /* Warna border berubah */
+    box-shadow: 0px 0px 5px rgba(76, 175, 80, 0.5); /* Efek glow hijau */
+    background-color: #ffffff;
 }
 
         button {
