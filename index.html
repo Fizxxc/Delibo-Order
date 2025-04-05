@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DeliBo Market</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -97,7 +98,7 @@
             border-radius: 5px;
         }
         .form-group select {
-            width: 100%;
+            width: 90%;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -114,6 +115,15 @@
         button:hover {
             background-color: #45a049;
         }
+        .bottom-nav a {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        }
+        .bottom-nav img {
+        height: 24px;
+        margin-bottom: 5px;
+        }
         footer {
         text-align: center;
         padding: 1px;
@@ -121,6 +131,56 @@
         bottom: 0;
         width: 100%;
     }
+    .slider {
+    width: 100%;
+    max-width: 350px; /* Sesuaikan dengan kebutuhan */
+    height: 200px; /* Sesuaikan dengan kebutuhan */
+    overflow: hidden;
+    position: relative;
+    border-radius: 10px;
+    background-color: #f8f8f8;
+}
+
+.slides {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 100%; /* 100% * jumlah gambar */
+}
+
+.slide {
+    width: 100%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slide img {
+    width: 500%;
+    height: 100%;
+    object-fit: cover; /* Pastikan gambar tidak gepeng */
+    border-radius: 20px;
+}
+
+    .dots-container {
+    text-align: center;
+    margin-top: 10px;
+}
+.dot {
+    height: 12px;
+    width: 12px;
+    margin: 0 5px;
+    background-color: gray;
+    border-radius: 50%;
+    display: inline-block;
+    transition: transform 0.3s, background-color 0.3s;
+    cursor: pointer;
+}
+
+.dot.active {
+    background-color: black;
+    transform: scale(1.5);
+}
     </style>
 </head>
 <body onload="updateGreeting(); updateClock();">
@@ -131,18 +191,19 @@
         </div>
         <div id="clock"></div>
     </div>
-
     <div class="container" id="home">
         <h2 id="greeting"></h2>
         <div class="slider">
             <div class="slides">
-                <img src="https://placehold.co/690x400/000000/FFF" alt="Menu 1">
-                <img src="https://via.placeholder.com/400x200?text=Menu+2" alt="Menu 2">
-                <img src="https://via.placeholder.com/400x200?text=Menu+3" alt="Menu 3">
+                <div class="slide"><img src="Saladd.jpg" alt="Menu 1"></div>
+                <div class="slide"><img src="Capcin.jpg" alt="Menu 2"></div>
+                <div class="slide"><img src="coming.jpg" alt="Menu 3"></div>
             </div>
         </div>
+        <div class="dots-container"></div>        
+    </div>
         <h2>Info DeliBo Market</h2>
-        <p>DeliBo Market menyediakan berbagai pilihan makanan lezat dengan pengiriman cepat.</p>
+        <p>No info yet</p>
     </div>
     <div class="container" id="order-form" style="display: none;">
         <h2>Form Order</h2>
@@ -160,11 +221,11 @@
         </div>
         <h3>Menu Makanan</h3>
         <div class="form-group">
-            <label for="food">Pilih Makanan</label>
+            <label for="food">Silahkan pilih menu yang ada</label>
             <select id="food">
-                <option>Nasi Goreng</option>
-                <option>Mie Ayam</option>
-                <option>Sate Ayam</option>
+                <option>Salad Buah (CLOSE ORDER)</option>
+                <option>Es Capcin</option>
+                <option>Souffle Pancake (COMING SOON)</option>
             </select>
         </div>
         <button onclick="submitOrder()">Pesan Sekarang</button>
@@ -172,6 +233,7 @@
     <div class="container" id="view-location" style="display: none;">
         <h3>Lokasi Penjual</h3>
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1982.675882928738!2d107.0973982!3d-6.2321179!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e698f61b3a72713%3A0xb8167e607634bb48!2sPerumahan%20Griya%20Yasa!5e0!3m2!1sen!2sid!4v1712345678901" allowfullscreen></iframe alt="Peta Lokasi">
+            <p>Perumahan Griya Yasa Blok B1/19 Wanasari, Cibitung, Bekasi, Jawabarat, 17520</p>
     </div>
 
     <footer>
@@ -179,10 +241,21 @@
     </footer>
 
     <div class="bottom-nav">
-        <a href="#" onclick="showPage('home', this)" class="active">Home</a>
-        <a href="#" onclick="showPage('order-form', this)">Order Form</a>
-        <a href="#" onclick="showPage('view-location', this)">Lokasi</a>
+        <a href="#" onclick="showPage('home', this)" class="active">
+            <div><img src="home.png" alt="Logo" style="height: 24px;"></div>
+            Home
+        </a>
+        <a href="#" onclick="showPage('order-form', this)">
+            <div><img src="order.png" alt="Logo" style="height: 24px;"></div>
+            Order Form
+        </a>
+        <a href="#" onclick="showPage('view-location', this)">
+            <div><img src="location.png" alt="Logo" style="height: 24px;"></div>
+            Lokasi
+        </a>
     </div>
+    
+    
     <script>
         function updateGreeting() {
             const hour = new Date().getHours();
@@ -205,16 +278,66 @@
             element.classList.add("active");
         }
         function submitOrder() {
-            const name = document.getElementById("name").value;
-            const address = document.getElementById("address").value;
-            const phone = document.getElementById("phone").value;
-            const food = document.getElementById("food").value;
-            if (name && address && phone) {
-                alert(`Pesanan atas nama ${name} untuk ${food} telah diterima!`);
-            } else {
-                alert("Mohon lengkapi semua data!");
-            }
+    const name = document.getElementById("name").value;
+    const address = document.getElementById("address").value;
+    const phone = document.getElementById("phone").value;
+    const food = document.getElementById("food").value;
+    const chatId = "-4763353438"; // Ganti dengan ID grup Telegram Anda
+    const botToken = "7930613961:AAEPVtQyEkZszGkRGISVg2fBd4GJOkcH77k"; // Ganti dengan token bot Telegram Anda
+    
+    if (!name || !address || !phone || !food) {
+        Swal.fire({
+            title: "Peringatan!",
+            text: "Harap isi semua kolom sebelum memesan.",
+            icon: "warning",
+            confirmButtonText: "OK"
+        });
+        return;
+    }
+    
+    const message = `Pesanan Baru:\nNama: ${name}\nAlamat: ${address}\nNomor Telepon: ${phone}\nMenu: ${food}`;
+    
+    const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+    
+    fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            chat_id: chatId,
+            text: message,
+            parse_mode: "Markdown"
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.ok) {
+            Swal.fire({
+                title: "Berhasil!",
+                text: "Pesanan berhasil dikirim!",
+                icon: "success",
+                confirmButtonText: "OK"
+            });
+        } else {
+            Swal.fire({
+                title: "Gagal!",
+                text: "Gagal mengirim pesanan.",
+                icon: "error",
+                confirmButtonText: "Coba Lagi"
+            });
         }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        Swal.fire({
+            title: "Terjadi Kesalahan!",
+            text: "Silakan coba lagi.",
+            icon: "error",
+            confirmButtonText: "OK"
+        });
+    });
+}
         function updateClock() {
             setInterval(() => {
                 const now = new Date();
@@ -222,6 +345,41 @@
             }, 1000);
         }
         document.getElementById("year").textContent = new Date().getFullYear();
+        document.addEventListener("DOMContentLoaded", function() {
+    const slidesContainer = document.querySelector(".slides");
+    const slides = document.querySelectorAll(".slide"); 
+    const dotsContainer = document.querySelector(".dots-container");
+
+    let currentIndex = 0;
+    
+    slides.forEach((_, index) => {
+        const dot = document.createElement("span");
+        dot.classList.add("dot");
+        if (index === 0) dot.classList.add("active");
+        dot.addEventListener("click", () => {
+            currentIndex = index;
+            showSlide(currentIndex);
+        });
+        dotsContainer.appendChild(dot);
+    });
+
+    const dots = document.querySelectorAll(".dot");
+
+    function showSlide(index) {
+        slidesContainer.style.transform = `translateX(-${index * 100}%)`;
+        dots.forEach(dot => dot.classList.remove("active"));
+        dots[index].classList.add("active");
+    }
+
+    function nextSlide() {
+        currentIndex = (currentIndex + 1) % slides.length;
+        showSlide(currentIndex);
+    }
+
+    showSlide(currentIndex);
+    setInterval(nextSlide, 3000);
+});
+
     </script>
 </body>
 </html>
