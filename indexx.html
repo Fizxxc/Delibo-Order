@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Situs Sedang dalam Perbaikan</title>
+    <style>
+        @keyframes glitch {
+            0% { transform: translate(0, 0); }
+            20% { transform: translate(2px, -2px); }
+            100% { transform: translate(0, 0); }
+        }
+        @keyframes glitchPage {
+            0%, 100% { filter: none; }
+            50% { filter: contrast(400%) brightness(250%) hue-rotate(30deg) saturate(250%) invert(40%) blur(2px); }
+        }
+        body {
+            font-family: 'Courier New', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #000;
+            text-align: center;
+            flex-direction: column;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+        .glitch {
+            position: relative;
+            display: inline-block;
+            animation: glitch 0.2s infinite;
+        }
+        .glitch::before, .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            left: 0;
+            opacity: 0.6;
+        }
+        .glitch::before {
+            animation: glitch 0.2s infinite;
+            color: red;
+            transform: translate(-2px, -1px);
+        }
+        .glitch::after {
+            animation: glitch 0.2s infinite;
+            color: blue;
+            transform: translate(2px, 1px);
+        }
+        .glitch-page {
+            animation: glitchPage 2s infinite;
+        }
+        .clock {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .container {
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        h1, p, .countdown {
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="clock" id="clock"></div>
+    <div class="container" id="content">
+        <h1 class="glitch" data-text="Situs Sedang dalam Perbaikan">Situs Sedang dalam Perbaikan</h1>
+        <p>Kami sedang melakukan pemeliharaan sistem. Silakan kembali dalam:</p>
+        <div class="countdown" id="countdown"></div>
+    </div>
+
+    <script>
+        function updateClock() {
+            let now = new Date();
+            let hours = now.getHours().toString().padStart(2, '0');
+            let minutes = now.getMinutes().toString().padStart(2, '0');
+            let seconds = now.getSeconds().toString().padStart(2, '0');
+            document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        function countdownTimer(targetDate) {
+            let countdownElement = document.getElementById('countdown');
+            
+            function updateCountdown() {
+                let now = new Date().getTime();
+                let timeDifference = targetDate - now;
+                let hours = Math.floor(timeDifference / (1000 * 60 * 60));
+                
+                if (hours < 0) {
+                    countdownElement.textContent = "Perbaikan selesai!";
+                    sendNotification();
+                } else {
+                    countdownElement.textContent = hours + " jam";
+                }
+            }
+            
+            function sendNotification() {
+                let botToken = "7250228481:AAG-C6TQMlIH8g0MZgEocnyNuaKRUaWzpYE";
+                let chatId = "6450551010";
+                let message = "⚠️ Perbaikan sistem telah selesai!";
+                
+                fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`)
+                    .then(response => response.json())
+                    .then(data => console.log("Notifikasi terkirim: ", data))
+                    .catch(error => console.error("Error mengirim notifikasi: ", error));
+            }
+            
+            updateCountdown();
+            setInterval(updateCountdown, 1000 * 60);
+        }
+        
+        let endDate = new Date();
+        endDate.setHours(endDate.getHours() + 72);
+        countdownTimer(endDate.getTime());
+
+        function startGlitchLoop() {
+            setInterval(() => {
+                document.body.classList.add('glitch-page');
+                setTimeout(() => {
+                    document.body.classList.remove('glitch-page');
+                }, 2000);
+            }, 5000);
+        }
+        startGlitchLoop();
+    </script>
+</body>
+</html>
