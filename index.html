@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeliBo Market</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding-bottom: 60px;
+            text-align: center;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            background-color: #4caf50;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.467);
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            color: white;
+        }
+        .header #clock {
+            font-size: 16px;
+            color: white;
+        }
+        .greeting {
+            font-size: 18px;
+            margin-top: 5px;
+            color: white;
+        }
+        .bottom-nav {
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 0;
+            box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 20px 20px 0 0;
+        }
+        .bottom-nav a {
+            text-decoration: none;
+            color: #aaa;
+            text-align: center;
+            flex-grow: 1;
+            transition: color 0.3s;
+        }
+        .bottom-nav a.active {
+            color: #4caf50;
+            font-weight: bold;
+        }
+        .slider {
+            width: 90%;
+            max-width: 400px;
+            overflow: hidden;
+            margin: 20px auto;
+        }
+        .slides {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .slides img {
+            width: 100%;
+            border-radius: 10px;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            margin: 20px auto;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+        }
+        .form-group {
+            margin-bottom: 10px;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            font-weight: bold;
+        }
+        .form-group input {
+            width: 90%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        footer {
+        text-align: center;
+        padding: 1px;
+        color: rgb(0, 0, 0);
+        bottom: 0;
+        width: 100%;
+    }
+    </style>
+</head>
+<body onload="updateGreeting(); updateClock();">
+    <div class="header">
+        <div>
+            <h1>DeliBo Market</h1>
+            <div id="greeting" class="greeting"></div>
+        </div>
+        <div id="clock"></div>
+    </div>
+
+    <div class="container" id="home">
+        <h2 id="greeting"></h2>
+        <div class="slider">
+            <div class="slides">
+                <img src="https://placehold.co/690x400/000000/FFF" alt="Menu 1">
+                <img src="https://via.placeholder.com/400x200?text=Menu+2" alt="Menu 2">
+                <img src="https://via.placeholder.com/400x200?text=Menu+3" alt="Menu 3">
+            </div>
+        </div>
+        <h2>Info DeliBo Market</h2>
+        <p>DeliBo Market menyediakan berbagai pilihan makanan lezat dengan pengiriman cepat.</p>
+    </div>
+    <div class="container" id="order-form" style="display: none;">
+        <h2>Form Order</h2>
+        <div class="form-group">
+            <label for="name">Nama</label>
+            <input type="text" id="name" placeholder="Masukkan nama">
+        </div>
+        <div class="form-group">
+            <label for="address">Alamat</label>
+            <input type="text" id="address" placeholder="Masukkan alamat">
+        </div>
+        <div class="form-group">
+            <label for="phone">Nomor Telepon</label>
+            <input type="text" id="phone" placeholder="Masukkan nomor telepon">
+        </div>
+        <h3>Menu Makanan</h3>
+        <div class="form-group">
+            <label for="food">Pilih Makanan</label>
+            <select id="food">
+                <option>Nasi Goreng</option>
+                <option>Mie Ayam</option>
+                <option>Sate Ayam</option>
+            </select>
+        </div>
+        <button onclick="submitOrder()">Pesan Sekarang</button>
+    </div>
+    <div class="container" id="view-location" style="display: none;">
+        <h3>Lokasi Penjual</h3>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1982.675882928738!2d107.0973982!3d-6.2321179!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e698f61b3a72713%3A0xb8167e607634bb48!2sPerumahan%20Griya%20Yasa!5e0!3m2!1sen!2sid!4v1712345678901" allowfullscreen></iframe alt="Peta Lokasi">
+    </div>
+
+    <footer>
+        <p>&copy; <span id="year"></span> Delibo Market. All rights reserved.</p>
+    </footer>
+
+    <div class="bottom-nav">
+        <a href="#" onclick="showPage('home', this)" class="active">Home</a>
+        <a href="#" onclick="showPage('order-form', this)">Order Form</a>
+        <a href="#" onclick="showPage('view-location', this)">Lokasi</a>
+    </div>
+    <script>
+        function updateGreeting() {
+            const hour = new Date().getHours();
+            let greeting = "Selamat Pagi";
+            if (hour >= 12 && hour < 15) {
+                greeting = "Selamat Siang";
+            } else if (hour >= 15 && hour < 18) {
+                greeting = "Selamat Sore";
+            } else if (hour >= 18) {
+                greeting = "Selamat Malam";
+            }
+            document.getElementById("greeting").innerText = greeting;
+        }
+        function showPage(pageId, element) {
+            document.getElementById("home").style.display = "none";
+            document.getElementById("order-form").style.display = "none";
+            document.getElementById("view-location").style.display = "none";
+            document.getElementById(pageId).style.display = "block";
+            document.querySelectorAll(".bottom-nav a").forEach(a => a.classList.remove("active"));
+            element.classList.add("active");
+        }
+        function submitOrder() {
+            const name = document.getElementById("name").value;
+            const address = document.getElementById("address").value;
+            const phone = document.getElementById("phone").value;
+            const food = document.getElementById("food").value;
+            if (name && address && phone) {
+                alert(`Pesanan atas nama ${name} untuk ${food} telah diterima!`);
+            } else {
+                alert("Mohon lengkapi semua data!");
+            }
+        }
+        function updateClock() {
+            setInterval(() => {
+                const now = new Date();
+                document.getElementById("clock").innerText = now.toLocaleTimeString("id-ID");
+            }, 1000);
+        }
+        document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
