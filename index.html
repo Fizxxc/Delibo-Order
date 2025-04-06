@@ -5,16 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Situs Sedang dalam Perbaikan</title>
     <style>
+        @keyframes glitch {
+            0% { transform: translate(0, 0); }
+            20% { transform: translate(-5px, 5px); }
+            40% { transform: translate(5px, -5px); }
+            60% { transform: translate(-5px, 5px); }
+            80% { transform: translate(5px, -5px); }
+            100% { transform: translate(0, 0); }
+        }
         @keyframes glitchPage {
             0%, 100% { filter: none; }
             50% { filter: contrast(300%) brightness(200%) hue-rotate(20deg) saturate(200%) invert(30%); }
-        }
-        @keyframes glitchText {
-            0% { clip-path: inset(0 0 95% 0); }
-            25% { clip-path: inset(30% 0 60% 0); }
-            50% { clip-path: inset(60% 0 30% 0); }
-            75% { clip-path: inset(20% 0 70% 0); }
-            100% { clip-path: inset(0 0 95% 0); }
         }
         body {
             font-family: 'Courier New', monospace;
